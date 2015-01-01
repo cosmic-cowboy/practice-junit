@@ -1,5 +1,6 @@
 package com.slgerkamp.junit.chapter11;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
@@ -66,4 +67,13 @@ public class MockitoExamples {
         verify(mock, never()).add("World");
     }
 
+    @Test
+    public void 部分的なモックオブジェクト() throws Exception {
+    	List<String> list = new ArrayList<>();
+    	List<String> spy = spy(list);
+    	when(spy.size()).thenReturn(100);
+    	spy.add("hello");
+    	assertThat(spy.get(0), is("hello"));
+    	assertThat(spy.size(), is(100));
+    }	
 }
