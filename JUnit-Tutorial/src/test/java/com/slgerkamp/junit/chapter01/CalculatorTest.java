@@ -30,11 +30,9 @@ public class CalculatorTest {
 		assertThat(actual, is(expected));
 	}
 
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void divideで5と0のとき() {
 		Calculator calc = new Calculator();
-		float expected = 0;
-		float actual = calc.divide(5, 0);
-		assertThat(actual, is(expected));
+		calc.divide(5, 0);
 	}
 }
