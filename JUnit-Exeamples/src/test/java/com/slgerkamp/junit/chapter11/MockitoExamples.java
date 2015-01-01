@@ -38,4 +38,12 @@ public class MockitoExamples {
         // 例外が送出される
         stub.get(2); 
     }
+
+    @Test(expected = RuntimeException.class)
+    public void 例外を送出する_戻り値がvoid型のメソッド() throws Exception {
+        List<String> stub = mock(List.class);
+        doThrow(new RuntimeException()).when(stub).clear();
+        stub.clear(); // 例外が送出される
+    }
+
 }
