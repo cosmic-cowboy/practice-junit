@@ -55,4 +55,15 @@ public class MockitoExamples {
         assertThat(stub.get(999), is("Hello"));
     }
 
+    @Test
+    public void モックの検証() throws Exception {
+        List<String> mock = mock(List.class);
+        mock.clear();
+        mock.add("Hello");
+        mock.add("Hello");
+        verify(mock).clear();
+        verify(mock, times(2)).add("Hello");
+        verify(mock, never()).add("World");
+    }
+
 }
