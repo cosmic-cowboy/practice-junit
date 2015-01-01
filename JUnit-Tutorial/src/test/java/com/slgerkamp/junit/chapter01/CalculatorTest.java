@@ -29,4 +29,12 @@ public class CalculatorTest {
 		float actual = calc.divide(3, 2);
 		assertThat(actual, is(expected));
 	}
+
+	@Test
+	public void divideで5と0のとき() {
+		Calculator calc = new Calculator();
+		float expected = 0;
+		float actual = calc.divide(5, 0);
+		assertThat(actual, is(expected));
+	}
 }
