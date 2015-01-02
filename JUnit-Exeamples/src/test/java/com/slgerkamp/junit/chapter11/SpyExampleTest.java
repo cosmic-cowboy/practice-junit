@@ -1,14 +1,15 @@
 package com.slgerkamp.junit.chapter11;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.verify;
-
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.junit.Test;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
+
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 public class SpyExampleTest {
 
@@ -24,5 +25,27 @@ public class SpyExampleTest {
 		assertThat(spy.get(0), is("Hello"));
 		assertThat(spy.get(1), is("Mockito"));
 	}
+	
+    @Test
+    public void Mockitoのspyを使ったテスト() throws Exception {
+        // SetUp
+        SpyExample sut = new SpyExample();
+        Logger spy = spy(sut.logger);
+        final StringBuilder infoLog = new StringBuilder();
+        doAnswer(new Answer<Void>() {
+
+			@Override
+			public Void answer(InvocationOnMock invocation) throws Throwable {
+                infoLog.append(invocation.getArguments()[0]);
+                invocation.callRealMethod();
+				return null;
+			}
+        }).when(spy).info(anyString());
+        sut.logger = spy;
+        // Exercise
+        sut.doSomething();
+        // Verify
+        assertThat(infoLog.toString(), is("doSomething"));
+    }
 }
 
